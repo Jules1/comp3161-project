@@ -29,8 +29,8 @@ CREATE TABLE doctor(
 	dob date,
 	address varchar(30),
 	phone varchar(8),
-
-)
+	primary key(doctor_id)
+);
 
 CREATE TABLE nurse(
 	nurse_id varchar(5) not null,
@@ -55,7 +55,7 @@ CREATE TABLE diagnosis(
 	primary key(diagnosis_id)
 );
 
-CREATE TABLE procedure(
+CREATE TABLE medProcedure(
 	procedure_id varchar(5) not null,
 	name varchar(50),
 	primary key(procedure_id)
@@ -63,7 +63,7 @@ CREATE TABLE procedure(
 
 CREATE TABLE step(
 	step_id varchar(5) not null,
-	order varchar(30),
+	step_order varchar(30),
 	instruction varchar(30),
 	primary key(step_id)
 );
@@ -168,14 +168,14 @@ CREATE TABLE diagRecorded(
 CREATE TABLE procedureRecorded(
 	procedure_id varchar(5),
 	record_id varchar(5),
-	FOREIGN KEY(procedure_id) REFERENCES procedure(procedure_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(procedure_id) REFERENCES medProcedure(procedure_id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY(record_id) REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE procedureStep(
 	procedure_id varchar(5),
 	step_id varchar(5),
-	FOREIGN KEY(procedure_id) REFERENCES procedure(procedure_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(procedure_id) REFERENCES medProcedure(procedure_id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY(step_id) REFERENCES step(step_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
