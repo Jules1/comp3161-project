@@ -18,7 +18,7 @@ CREATE TABLE medicine(
 	name varchar(20),
 	measurement varchar(4),
 	unit varchar(2),
-	administration varchar(2), /* Code to show mode of administration - O = Oral, A = Anal, IV = Intravenous IM = Intramuscular.*/
+	administration ENUM ('Oral', 'Topical', 'Intravenous', 'Intramuscular', 'Optic', 'Rectal', 'Vaginal', 'Nasal'),
 	primary key(med_id)
 );
 
@@ -92,84 +92,84 @@ CREATE TABLE medical_rec(
 CREATE TABLE DPAttends(
 	doctor_id varchar(5),
 	patient_id varchar(5),
-	FOREIGN KEY doctor_id references doctor(doctor_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY patient_id references patient(patient_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(doctor_id) REFERENCES doctor(doctor_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(patient_id) REFERENCES patient(patient_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE NPAttends(
 	nurse_id varchar(5),
 	patient_id varchar(5),
-	FOREIGN KEY nurse_id references nurse(nurse_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY patient_id references patient(patient_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(nurse_id) REFERENCES nurse(nurse_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(patient_id) REFERENCES patient(patient_id) ON DELETE CASCADE ON UPDATE CASCADE
 
 );
 
 CREATE TABLE patientMedical(
 	record_id varchar(5),
 	patient_id varchar(5),
-	FOREIGN KEY patient_id references patient(patient_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY record_id REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(patient_id) REFERENCES patient(patient_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(record_id) REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE patientRelation(
 	patient_id varchar(5),
-	FOREIGN KEY patient_id references patient(patient_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(patient_id) REFERENCES patient(patient_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE retrieves(
 	nurse_id varchar(5),
 	record_id varchar(5),
-	FOREIGN KEY nurse_id REFERENCES nurse(nurse_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY record_id REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(nurse_id) REFERENCES nurse(nurse_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(record_id) REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE administers(
 	nurse_id varchar(5),
 	med_id varchar(5),
-	FOREIGN KEY nurse_id REFERENCES nurse(nurse_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY med_id REFERENCES medicine(med_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(nurse_id) REFERENCES nurse(nurse_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(med_id) REFERENCES medicine(med_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE medicineRecorded(
 	med_id varchar(5),
 	record_id varchar(5),
-	FOREIGN KEY med_id REFERENCES medicine(med_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY record_id REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(med_id) REFERENCES medicine(med_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(record_id) REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE updateVital(
 	vital_id varchar(5),
 	nurse_id varchar(5),
-	FOREIGN KEY vital_id REFERENCES vitals(vital_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY nurse_id REFERENCES nurse(nurse_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(vital_id) REFERENCES vitals(vital_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(nurse_id) REFERENCES nurse(nurse_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE vitalRecorded(
 	vital_id varchar(5),
 	record_id varchar(5),
-	FOREIGN KEY vital_id REFERENCES vitals(vital_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY record_id REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(vital_id) REFERENCES vitals(vital_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(record_id) REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE docManage(
 	doctor_id varchar(5),
 	record_id varchar(5),
-	FOREIGN KEY doctor_id REFERENCES doctor(doctor_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY record_id REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(doctor_id) REFERENCES doctor(doctor_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(record_id) REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE diagRecorded(
 	diagnosis_id varchar(5),
 	record_id varchar(5),
-	FOREIGN KEY diagnosis_id REFERENCES diagnosis(diagnosis_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY record_id REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(diagnosis_id) REFERENCES diagnosis(diagnosis_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(record_id) REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE procedureRecorded(
 	procedure_id varchar(5),
 	record_id varchar(5),
-	FOREIGN KEY procedure_id REFERENCES procedure(procedure_id) ON DELETE CASCADE ON UPDATE CASCADE,
-	FOREIGN KEY record_id REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
+	FOREIGN KEY(procedure_id) REFERENCES procedure(procedure_id) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY(record_id) REFERENCES medical_rec(record_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE procedureStep(
