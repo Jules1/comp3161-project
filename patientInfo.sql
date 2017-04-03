@@ -24,6 +24,7 @@ CREATE TABLE medicine(
 
 CREATE TABLE doctor(
 	doctor_id varchar(5) not null,
+	doctype ENUM('Intern', 'Consultant', 'Resident'),
 	fname varchar(20),
 	lname varchar(20),
 	dob date,
@@ -194,3 +195,29 @@ CREATE TABLE resultRecorded(
 );
 
 /* ALL ISA TABLES*/
+
+CREATE TABLE intern(
+	doctor_id varchar(5),
+	FOREIGN KEY(doctor_id) REFERENCES doctor(doctor_id)
+);
+CREATE TABLE resident(
+	doctor_id varchar(5),
+	FOREIGN KEY(doctor_id) REFERENCES doctor(doctor_id)
+);
+CREATE TABLE consultant(
+	doctor_id varchar(5),
+	specialization varchar(25),
+	FOREIGN KEY(doctor_id) REFERENCES doctor(doctor_id)
+);
+
+CREATE TABLE midwife(
+	nurse_id varchar(5),
+	FOREIGN KEY(nurse_id) REFERENCES nurse(nurse_id)
+);CREATE TABLE registered(
+	nurse_id varchar(5),
+	FOREIGN KEY(nurse_id) REFERENCES nurse(nurse_id)
+);
+CREATE TABLE enrolled(
+	nurse_id varchar(5),
+	FOREIGN KEY(nurse_id) REFERENCES nurse(nurse_id)
+);
